@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { CirclePlus, Trash2 } from "lucide-react";
 import { Label } from "./ui/label";
 import { postData } from "@/lib/utils";
+import { toast } from "react-toastify";
 
 type CategoryFormValues = {
 	categories: { name: string }[];
@@ -42,10 +43,12 @@ export function AddCategoryDialog() {
 			// Loop through each category and post
 			for (const category of data.categories) {
 				if (category.name.trim()) {
-					const response = await postData("/blogs/categories", {
+					const response = await postData("/category", {
 						name: category.name,
 					});
 					console.log(response);
+					toast.success(response.message);
+					window.location.reload();
 				}
 			}
 

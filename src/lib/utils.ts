@@ -7,16 +7,16 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 
-const BASE_URL = import.meta.env.API_URL;
-
-type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE'
+const BASE_URL = import.meta.env.VITE_API_URL;
+export const take=import.meta.env.VITE_LIST_COUNT
+type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE' |"PUT"
 
 async function request<TResponse>(
   endpoint: string,
   method: HttpMethod,
   data?: unknown
 ): Promise<TResponse> {
-  const token = import.meta.env.TOKEN
+  const token = import.meta.env.VITE_TOKEN
 
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
@@ -33,7 +33,6 @@ async function request<TResponse>(
   }
 
   const res = await fetch(`${BASE_URL}${endpoint}`, config)
-console.log(endpoint);
 
   if (!res.ok) {
     const errorData = await res.json().catch(() => ({}))
@@ -53,6 +52,9 @@ export function postData<TResponse>(endpoint: string, data: unknown) {
 
 export function patchData<TResponse>(endpoint: string, data: unknown) {
   return request<TResponse>(endpoint, 'PATCH', data)
+}
+export function putData<TResponse>(endpoint: string, data: unknown) {
+  return request<TResponse>(endpoint, 'PUT', data)
 }
 
 export function deleteData<TResponse>(endpoint: string, data?: unknown) {

@@ -22,6 +22,10 @@ const router = createBrowserRouter([
 				path: "/blog/new",
 				element: <BlogFormCreate />,
 			},
+			{
+				path: "/blog/edit/:postId",
+				element: <BlogFormCreate />,
+			},
 		],
 	},
 ]);
